@@ -16,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         password: config.get<string>('DB_PASS', 'postgres'),
         database: config.get<string>('DB_NAME', 'nest_reference'),
         autoLoadEntities: true,
-        synchronize: false,
+        synchronize: config.get<string>('DB_SYNC', 'false') === 'true',
         logging: config.get<string>('TYPEORM_LOGGING', 'false') === 'true',
       }),
     }),

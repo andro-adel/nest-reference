@@ -11,6 +11,8 @@ import { HealthModule } from './health/health.module';
 import { DatabaseModule } from './core/database/database.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ProductsModule } from './modules/products/products.module';
+import { MetricsModule } from './core/metrics/metrics.module';
 
 @Module({
   imports: [
@@ -39,6 +41,8 @@ import { AuthModule } from './modules/auth/auth.module';
     DatabaseModule,
     UsersModule,
     AuthModule,
+    ProductsModule,
+    MetricsModule,
   ],
   controllers: [AppController],
   providers: [

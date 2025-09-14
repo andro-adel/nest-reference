@@ -20,6 +20,8 @@ const health_module_1 = require("./health/health.module");
 const database_module_1 = require("./core/database/database.module");
 const users_module_1 = require("./modules/users/users.module");
 const auth_module_1 = require("./modules/auth/auth.module");
+const products_module_1 = require("./modules/products/products.module");
+const metrics_module_1 = require("./core/metrics/metrics.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -50,6 +52,8 @@ exports.AppModule = AppModule = __decorate([
             database_module_1.DatabaseModule,
             users_module_1.UsersModule,
             auth_module_1.AuthModule,
+            products_module_1.ProductsModule,
+            metrics_module_1.MetricsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [
