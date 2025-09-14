@@ -18,6 +18,8 @@ const core_1 = require("@nestjs/core");
 const terminus_1 = require("@nestjs/terminus");
 const health_module_1 = require("./health/health.module");
 const database_module_1 = require("./core/database/database.module");
+const users_module_1 = require("./modules/users/users.module");
+const auth_module_1 = require("./modules/auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,7 +29,9 @@ exports.AppModule = AppModule = __decorate([
             config_1.ConfigModule.forRoot({ isGlobal: true }),
             nestjs_pino_1.LoggerModule.forRoot({
                 pinoHttp: {
-                    transport: process.env.NODE_ENV !== 'production' ? { target: 'pino-pretty' } : undefined,
+                    transport: process.env.NODE_ENV !== 'production'
+                        ? { target: 'pino-pretty' }
+                        : undefined,
                     autoLogging: true,
                 },
             }),
@@ -44,6 +48,8 @@ exports.AppModule = AppModule = __decorate([
             terminus_1.TerminusModule,
             health_module_1.HealthModule,
             database_module_1.DatabaseModule,
+            users_module_1.UsersModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

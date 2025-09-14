@@ -8,8 +8,6 @@ export class HealthController {
   @Get()
   @HealthCheck()
   check() {
-    return this.health.check([
-      async () => ({ app: { status: 'up' as const } }),
-    ]);
+    return this.health.check([() => ({ app: { status: 'up' as const } })]);
   }
 }

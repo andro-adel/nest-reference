@@ -9,28 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HealthController = void 0;
+exports.JwtStrategy = void 0;
 const common_1 = require("@nestjs/common");
-const terminus_1 = require("@nestjs/terminus");
-let HealthController = class HealthController {
-    health;
-    constructor(health) {
-        this.health = health;
+const passport_1 = require("@nestjs/passport");
+const passport_jwt_1 = require("passport-jwt");
+const config_1 = require("@nestjs/config");
+let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
+    constructor(config) {
+        super({
+            jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
+            ignoreExpiration: false,
+            secretOrKey: config.get('JWT_ACCESS_SECRET', 'dev_secret'),
+        });
     }
-    check() {
-        return this.health.check([() => ({ app: { status: 'up' } })]);
+    async validate(payload) {
+        return { userId: payload.sub, email: payload.email, roles: payload.roles };
     }
 };
-exports.HealthController = HealthController;
-__decorate([
-    (0, common_1.Get)(),
-    (0, terminus_1.HealthCheck)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], HealthController.prototype, "check", null);
-exports.HealthController = HealthController = __decorate([
-    (0, common_1.Controller)({ path: 'health', version: '1' }),
-    __metadata("design:paramtypes", [terminus_1.HealthCheckService])
-], HealthController);
-//# sourceMappingURL=health.controller.js.map
+exports.JwtStrategy = JwtStrategy;
+exports.JwtStrategy = JwtStrategy = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [config_1.ConfigService])
+], JwtStrategy);
+//# sourceMappingURL=jwt.strategy.js.map
