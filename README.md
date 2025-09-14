@@ -25,6 +25,26 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Project Quickstart (This Repo)
+
+For end-to-end setup, Docker, migrations + seed, RBAC, Redis cache, metrics, and Postman examples, see `RUNBOOK.md`.
+
+Quick steps:
+
+1. Copy env and start stack
+   - `cp .env.example .env` (Windows PowerShell: `Copy-Item .env.example .env`)
+   - `docker compose up -d --build`
+2. Initialize database
+   - `npm run migration:run`
+   - `npm run seed`
+3. Explore
+   - Swagger UI: `http://localhost:3000/api/docs`
+   - Health: `GET /api/v1/health`
+   - Metrics: `GET /api/v1/metrics`
+4. Postman collection
+   - Import `postman/nest-reference.postman_collection.json`
+   - Set variables: `baseUrl`, `token`, `productId`
+
 ## Project setup
 
 ```bash
