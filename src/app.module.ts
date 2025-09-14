@@ -13,6 +13,9 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ProductsModule } from './modules/products/products.module';
 import { MetricsModule } from './core/metrics/metrics.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { ConfigService } from '@nestjs/config';
+import { redisStore } from 'cache-manager-redis-yet';
 
 @Module({
   imports: [
@@ -36,6 +39,19 @@ import { MetricsModule } from './core/metrics/metrics.module';
         limit: 100,
       },
     ]),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        store: await redisStore({
+          socket: {
+            host: config.get<string>('REDIS_HOST', 'localhost'),
+            port: parseInt(config.get<string>('REDIS_PORT', '6379'), 10),
+          },
+        }),
+        ttl: 5 * 60 * 1000,
+      }),
+    }),
     TerminusModule,
     HealthModule,
     DatabaseModule,

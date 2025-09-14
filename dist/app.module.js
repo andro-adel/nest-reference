@@ -22,6 +22,9 @@ const users_module_1 = require("./modules/users/users.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const products_module_1 = require("./modules/products/products.module");
 const metrics_module_1 = require("./core/metrics/metrics.module");
+const cache_manager_1 = require("@nestjs/cache-manager");
+const config_2 = require("@nestjs/config");
+const cache_manager_redis_yet_1 = require("cache-manager-redis-yet");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -47,6 +50,19 @@ exports.AppModule = AppModule = __decorate([
                     limit: 100,
                 },
             ]),
+            cache_manager_1.CacheModule.registerAsync({
+                isGlobal: true,
+                inject: [config_2.ConfigService],
+                useFactory: async (config) => ({
+                    store: await (0, cache_manager_redis_yet_1.redisStore)({
+                        socket: {
+                            host: config.get('REDIS_HOST', 'localhost'),
+                            port: parseInt(config.get('REDIS_PORT', '6379'), 10),
+                        },
+                    }),
+                    ttl: 5 * 60 * 1000,
+                }),
+            }),
             terminus_1.TerminusModule,
             health_module_1.HealthModule,
             database_module_1.DatabaseModule,

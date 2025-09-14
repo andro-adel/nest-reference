@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log
+Dockerfile*
+README.md
+.git
+.gitignore
+.gitlab-ci.yml
+.github/
+coverage
+.eslint*
+*.tsbuildinfo
+.env
+.env.*
